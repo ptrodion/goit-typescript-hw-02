@@ -1,4 +1,3 @@
-import { IHit } from '../Api/type';
 import { GalleryItems } from '../ImageGalleryItem/ImageGalleryItem';
 import { ImageGallerySt } from './ImageGallery.styled';
 import { IImageGallery } from './types';
@@ -10,24 +9,16 @@ export const ImageGallery = ({
   handlerOpenModal,
 }: IImageGallery) => {
 
-  const uniqueImages: IHit[] = images.reduce<IHit[]>((acc, current) => {
-    const exists = acc.find(item => item.id === current.id);
-    if (!exists) {
-      acc.push(current);
-    }
-    return acc;
-  }, []);
-
   return (
     <ImageGallerySt>
-      {uniqueImages.map(({ id, ...images }) => (
+      {images.map((image, index) => (
         <GalleryItems
-          key={id}
-          images={images}
+          key={`${image.id}-${index}`}
+          images={image}
           handlerGetLargePhotoURL={handlerGetLargePhotoURL}
           handlerGetAlt={handlerGetAlt}
           handlerOpenModal={handlerOpenModal}
-        ></GalleryItems>
+        />
       ))}
     </ImageGallerySt>
   );
